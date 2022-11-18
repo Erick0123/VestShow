@@ -17,55 +17,71 @@ public class Main {
 
 	public static void main(String[] args) {
 		// Criando usuario adm
-		userList.add(new Usuario("Usu·rio Adm", "70400654000198", "usuarioadm@xgames.com", "123456", "administrador"));
+		userList.add(new Usuario("Erick Alan", "70400654000198", "usuario.adm@gmail.com", "123456", "administrador"));
 
 		// adicionando produtos
 		// Camisetas
         produtos.add(new Produto("God of war 4", "Camiseta", 20, 49.99, "G", 1));
         produtos.add(new Produto("Sonic", "Camiseta", 15, 49.99, "M", 2));
-        produtos.add(new Produto("M·rio", "Camiseta", 10, 49.99, "P", 3));
-        //calÁas
-        produtos.add(new Produto("CalÁa moletom - Preta", "CalÁa", 20, 99.99, "42", 4));
-        produtos.add(new Produto("CalÁa jeans - Cinza escura", "CalÁa", 20, 95.99, "44", 5));
-        produtos.add(new Produto("CalÁa moleto - Cinza chumbo", "CalÁa", 20, 80.90, "46", 6));
-        //calÁados
-        produtos.add(new Produto("Air max - Nike", "CalÁados", 20, 320.99, "42", 7));
-        produtos.add(new Produto("Jordan 4 - Nike", "CalÁados", 20, 122.90, "41", 8));
-        produtos.add(new Produto("All Star", "CalÁados", 20, 60.00, "36", 9));
+        produtos.add(new Produto("Mario Kart", "Camiseta", 10, 49.99, "P", 3));
+        //cal√ßas
+        produtos.add(new Produto("Cal√ßa moletom - Preta", "Cal√ßa", 20, 99.99, "42", 4));
+        produtos.add(new Produto("Cal√ßa jeans - Cinza escura", "Cal√ßa", 20, 95.99, "44", 5));
+        produtos.add(new Produto("Cal√ßa moleto - Cinza chumbo", "Cal√ßa", 20, 80.90, "46", 6));
+        //cal√ßados
+        produtos.add(new Produto("Air max - Nike", "Cal√ßados", 20, 320.99, "42", 7));
+        produtos.add(new Produto("Jordan 4 - Nike", "Cal√ßados", 20, 122.90, "41", 8));
+        produtos.add(new Produto("All Star", "Cal√ßados", 20, 60.00, "36", 9));
 
 		// variaveis
-		String menu = 	"**************************************{ Seja Bem vindo ‡ VestShow }**************************************\n" +
-						"\t\t\t\t\tUma plataforma de ecommerce\n\n ";
-		boolean isLoop = true;
+		boolean loop = true;
 		int opcao = 0;
-		// Inicio----------------------------------------------------------------------------------------
+		String menu = 	"******************************************{ Seja Bem vindo √† VestShow }*****************************************\n\n" +
+													"\t\t\t\t\t   Uma plataforma de ecommerce ";
+		
+		
+		//---------------------------------------inicio da aplica√ß√£o-------------------------------------------
 		System.out.println(menu);
-		System.out.println("1-Logar\n2-Cadastrar\n3-Entrar sem logar");
-		user = escolherEntrada(isLoop, opcao);
-		if (user == null) {
-			produto.menu(produtos);	
-			user = escolherEntrada(isLoop, opcao);
-		}
+		do {
+			if(!produto.viewEstoque(produtos)) {
+				loop = false;
+			};			
+		} while(loop);		
+		user = startApplication(loop, opcao);
 		if (user != null) {
-			System.out.println("\n******************{ Menu do " + user.getTipo() + " }******************\n");
-			System.out.println("Ol· " + user.getNome() + "");
+			System.out.println("\n*******************************************{ Menu do " + user.getTipo() + " }*******************************************\n");
+			System.out.println(" ______________________________________________________________________________________________________________\n" +
+			  "| \t\t\t\t  Seja bem vindo a central do " + user.getTipo() + ", " + user.getNome() + "\t\t\t       |" +
+			"\n|______________________________________________________________________________________________________________|");
+			
 			if (user.getTipo().equals("administrador")) {
 				menuPerfilAdm(produtos);
 			} else if (user.getTipo().equals("cliente")) {
 				produto.menuPerfilClient(produtos);
 			}
 		}
-//		for (int i = 0; i < userList.size(); i++) {
-//			System.out.println(userList.get(i));
-//		}
-		
 	}
 
-	public static Usuario escolherEntrada(boolean isLoop, int opcao) {
+	public static Usuario startApplication(boolean isLoop, int opcao) {
+		isLoop = true;
+		String entrada =
+				  "| \t\t\t\t   Os passos a seguir √© necess√°rio fazer login!\t\t\t\t       |" +
+				"\n|______________________________________________________________________________________________________________|\n\n" + 
+				"0- Sair da plataforma\n1- Logar\n2- Cadastrar\n3- Entrar sem logar";
+		
+		String saida =
+				  " ______________________________________________________________________________________________________________\n" +
+				  "| \t\t\t\t\t   Obrigado e volte sempre :) \t\t\t\t\t       |" +
+				"\n|______________________________________________________________________________________________________________|";
+		System.out.println(entrada);
 		while (isLoop) {
 			System.out.print("Acesse a plataforma: ");
 			opcao = sc.nextInt();
 	        switch (opcao) {
+            	case 0:
+            		System.out.println(saida);
+            		isLoop = false;
+            		break;
 	            case 1:
 	            	return user.login(isLoop, userList);
 	            case 2:
@@ -75,7 +91,7 @@ public class Main {
 	                isLoop = false;
 	                break;
 	            default:
-	                System.err.println("\n*******OpÁ„o inv·lido******\n");
+	                System.err.println("\n*******Op√ß√£o inv√°lido******\n");
 	                break;
 	        }
 		}
@@ -84,25 +100,25 @@ public class Main {
 	
 	public static void menuPerfilAdm(List<Produto> lista) {
         Scanner sc = new Scanner(System.in);
-        String menu =	"\n1- Ver menu \t\t\t5- Meus dados do usu·rio \n" +
-						"2- Criar um novo produto \t6- Editar perfil do usu·rio \n" +
+        String menu =	"\n1- Ver estoque \t\t\t5- Meus dados do usu√°rio \n" +
+						"2- Criar um novo produto \t6- Editar perfil do usuÔøΩrio \n" +
 						"3- Editar produto \t\t7-Sair\n" +
 						"4- Excluir produto\n" +
-                "Qual opÁ„o deseja acessar: ";
+                "Qual op√ß√£o deseja acessar: ";
         System.out.print(menu);
         int opcao = sc.nextInt();
         boolean isLoop = true;
         while(isLoop){
             switch (opcao) {
                 case 1:
-                    produto.menu(lista);
+                	//view estoque
+                    produto.viewEstoque(lista);
                     menuPerfilAdm(lista);
-                    isLoop = false;
                     break;
                 case 2:
                     //create Producto
-                    lista.add(produto.createProducto(lista));
-                    isLoop = false;
+                    produto.createProducto(lista);
+                    menuPerfilAdm(lista);
                     break;
                 case 3:
                     //editProducto(lista);
@@ -121,11 +137,11 @@ public class Main {
                     isLoop = false;
                     break;
                 case 7:
-                	System.out.println("Encerrando sess„o");
+                	System.out.println("Encerrando sess√£o");
                     isLoop = false;
                     break;
                 default:
-                	System.err.println("\n*******OpÁ„o inv·lido******\n");
+                	System.err.println("\n*******Op√ß√£o inv√°lido******\n");
                     break;
             }
         }

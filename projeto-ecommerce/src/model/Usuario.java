@@ -40,7 +40,7 @@ public class Usuario {
         String emailCpfCnpj, senha;
         Usuario user = new Usuario();
         while (isLoop) {
-            System.out.println("\n\tLogin\n");
+            System.out.println("\n***************************************************{ Login }***************************************************\n");
             System.out.print("Email ou CPF ou CNPJ: ");
             emailCpfCnpj = sc.next();
             System.out.print("Senha: ");
@@ -53,7 +53,7 @@ public class Usuario {
                 }
             }
             if ((user.getCpfCnpj() == null && user.getEmail() == null) && user.getSenha() == null) {
-                System.err.println("\t\tUsu·rio n„o encontrado, tente novamente...");
+                System.err.println("\t\tUsu√°rio n√£o encontrado, tente novamente...");
             }
         }
         return user;
