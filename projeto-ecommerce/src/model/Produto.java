@@ -143,7 +143,7 @@ public class Produto {
 	public void createProducto(List<Produto> lista) {
 		Scanner sc = new Scanner(System.in);
 		System.out.println(
-				"\n*********************************************{ Criação do Produto }*********************************************");
+				"\n*********************************************{ Criação do Produto }********************************************");
 		System.out.print("Nome: ");
 		nome = sc.next();
 		System.out.print("Categoria: ");
