@@ -40,34 +40,39 @@ public class Main {
 													"\t\t\t\t\t   Uma plataforma de ecommerce ";
 		
 		
-		//---------------------------------------inicio da aplicação-------------------------------------------
+		//--------------------------------------- inicio da aplicação-------------------------------------------
+		produto.editProducto(produtos, true, 1);
 		System.out.println(menu);
-		do {
-			if(!produto.viewEstoque(produtos)) {
-				loop = false;
-			};			
-		} while(loop);		
+		viewEstoque(loop);
 		user = startApplication(loop, opcao);
 		if (user != null) {
-			System.out.println("\n*******************************************{ Menu do " + user.getTipo() + " }*******************************************\n");
 			System.out.println(" ______________________________________________________________________________________________________________\n" +
 			  "| \t\t\t\t  Seja bem vindo a central do " + user.getTipo() + ", " + user.getNome() + "\t\t\t       |" +
 			"\n|______________________________________________________________________________________________________________|");
 			
 			if (user.getTipo().equals("administrador")) {
-				menuPerfilAdm(produtos);
+				menuPerfilAdm(produtos, loop);
 			} else if (user.getTipo().equals("cliente")) {
 				produto.menuPerfilClient(produtos);
 			}
 		}
 	}
+	//--------------------------------------- final da aplicação-------------------------------------------
+	
+	//---------------------------------------     métodos   -------------------------------------------
+	public static void viewEstoque(boolean loop) {
+		do {
+			if(!produto.viewEstoque(produtos)) {
+				loop = false;
+			};			
+		} while(loop);		
+	}
 
 	public static Usuario startApplication(boolean isLoop, int opcao) {
-		isLoop = true;
 		String entrada =
 				  "| \t\t\t\t   Os passos a seguir é necessário fazer login!\t\t\t\t       |" +
 				"\n|______________________________________________________________________________________________________________|\n\n" + 
-				"0- Sair da plataforma\n1- Logar\n2- Cadastrar\n3- Entrar sem logar";
+				"0- Sair da plataforma\n1- Logar\n2- Cadastrar";
 		
 		String saida =
 				  " ______________________________________________________________________________________________________________\n" +
@@ -87,9 +92,6 @@ public class Main {
 	            case 2:
 	                userList.add(user.cadastrar());
 	                return user = user.login(isLoop, userList);
-	            case 3:
-	                isLoop = false;
-	                break;
 	            default:
 	                System.err.println("\n*******Opção inválido******\n");
 	                break;
@@ -98,31 +100,46 @@ public class Main {
 		return null;
 	}
 	
-	public static void menuPerfilAdm(List<Produto> lista) {
+	public static void menuPerfilAdm(List<Produto> lista, boolean isLoop) {
         Scanner sc = new Scanner(System.in);
+        System.out.println("\n*******************************************{ Menu do " + user.getTipo() + " }*******************************************\n");
         String menu =	"\n1- Ver estoque \t\t\t5- Meus dados do usuário \n" +
-						"2- Criar um novo produto \t6- Editar perfil do usu�rio \n" +
+						"2- Criar um novo produto \t6- Editar perfil do usuário \n" +
 						"3- Editar produto \t\t7-Sair\n" +
 						"4- Excluir produto\n" +
                 "Qual opção deseja acessar: ";
         System.out.print(menu);
         int opcao = sc.nextInt();
-        boolean isLoop = true;
         while(isLoop){
             switch (opcao) {
                 case 1:
                 	//view estoque
                     produto.viewEstoque(lista);
-                    menuPerfilAdm(lista);
+                	viewEstoque(isLoop);
+                    menuPerfilAdm(lista, isLoop);
                     break;
                 case 2:
                     //create Producto
                     produto.createProducto(lista);
-                    menuPerfilAdm(lista);
+                    menuPerfilAdm(lista, isLoop);
                     break;
                 case 3:
-                    //editProducto(lista);
-                    isLoop = false;
+                    //edition Producto
+                	int quantidade = 0;
+                	while (isLoop) {
+            			System.out.print("Quantos produtos deseja editar: ");
+            			quantidade = sc.nextInt();
+            			if (quantidade < 1) {
+            				System.err.println("a quantidade deve ser maior que 0!");
+            				isLoop = true;
+            			} else {
+            				isLoop = false;
+            			}
+            		}
+                	for (int i = 0; i < quantidade; i++) {
+                		produto.editProducto(lista, isLoop, (i + 1));						
+					}
+                	menuPerfilAdm(lista, isLoop);
                     break;
                 case 4:
                     //deleteProducto(lista)
