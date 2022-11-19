@@ -26,11 +26,11 @@ public class Usuario {
         System.out.print("\n\t\tDigite seu nome: " );
         nome = sc.nextLine();
         System.out.print("\t\tDigite seu email: ");
-        email = sc.next();
+        email = sc.nextLine();
         System.out.print("\t\tDigite seu CPF: ");
-        cpfCnpj = sc.next();
+        cpfCnpj = sc.nextLine();
         System.out.print("\t\tDigite sua senha: ");
-        senha = sc.next();
+        senha = sc.nextLine();
         tipo = "cliente";
         return new Usuario(nome, cpfCnpj, email, senha, tipo);
     }

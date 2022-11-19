@@ -41,7 +41,6 @@ public class Main {
 		
 		
 		//--------------------------------------- inicio da aplicação-------------------------------------------
-		produto.editProducto(produtos, true, 1);
 		System.out.println(menu);
 		viewEstoque(loop);
 		user = startApplication(loop, opcao);
@@ -110,6 +109,7 @@ public class Main {
                 "Qual opção deseja acessar: ";
         System.out.print(menu);
         int opcao = sc.nextInt();
+        isLoop = true;
         while(isLoop){
             switch (opcao) {
                 case 1:

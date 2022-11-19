@@ -7,6 +7,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import javax.swing.plaf.synth.SynthOptionPaneUI;
+import javax.swing.tree.RowMapper;
 
 public class Produto {
 	private String nome;
@@ -37,7 +38,7 @@ public class Produto {
 		}
 		System.out.println(
 				"\n*******************************************{ Informações do Produto }*******************************************\n"
-						+ "Nome " + "\t\t\t\tCategoria" + "\t\tPreço" + "\t\tTamanho" + "\t\tEstoque" + "\t\tCódigo");
+						+ "Nome " + "\t\t\t\tCategoria" + "\t\tPreço" + "\t\tTamanho" + "\t\tQuantidade" + "\t\tCódigo");
 		if (listaCategoria.size() < 2) {
 			lista.stream().distinct().forEach(f -> {
 				if (f.categoria == listaCategoria.get(0)) {
@@ -110,7 +111,7 @@ public class Produto {
 
 	private String imprimirTabela(int tamanhoPalavra) {
 		String tabela = "";
-		if (tamanhoPalavra <= 8) {
+		if (tamanhoPalavra < 8) {
 			tabela = "________________________________________________________________________________________________________________\n"
 					+ nome + "\t\t\t\t" + categoria + "\t\t" + preco + "\t\t" + tamanho + "\t\t" + quantidade + "\t\t"
 					+ codigo;
@@ -166,26 +167,34 @@ public class Produto {
 
 	public void editProducto(List<Produto> lista, boolean loop, int posicao) {
 		Scanner sc = new Scanner(System.in);
+		Produto produtoEncontrado = new Produto();
+		Produto produtoAntigo = new Produto();
+		String campos;
+		String[] splitCampos;
 		System.out.println(
 				"\n*********************************************{ Edição de Produtos }********************************************");
 		System.out.println(
 				" ______________________________________________________________________________________________________________\n"
 						+ "|\t\t O modelo de edição funciona com o nome do campo separado por '-' (traço) da seguinte forma:   |"
 						+ "\n| \t\t\t\t  O que deseja editar: nome-tamanho-preço\t\t\t\t       |"
-						+ "\n| \t\t Não utilize espaços(nome - tamanho- preço), faça exatamente como o exemplo acima\t       |"
 						+ "\n|______________________________________________________________________________________________________________|\n\n");
-		/*
-		 * Por conta do Scanner não salvar a informação depois do espaço (ñ sei o porquê
-		 * ), deixei um aviso para não colocar espaço pro valor não sair errado. Poderia
-		 * colocar como JOptionPane porém a intenção do projeto por estilização optei só
-		 * por utilizar o console.
-		 */
-		String campos;
-		String[] splitCampos;
-		Produto produtoEncontrado = searchProduct(lista, true, posicao);
+
+		
+		produtoEncontrado = searchProduct(lista, true, posicao);
+		produtoAntigo.setNome(produtoEncontrado.getNome());
+		produtoAntigo.setCategoria(produtoEncontrado.getCategoria());
+		produtoAntigo.setTamanho(produtoEncontrado.getTamanho());
+		produtoAntigo.setPreco(produtoEncontrado.getPreco());
+		produtoAntigo.setQuantidade(produtoEncontrado.getQuantidade());
+		produtoAntigo.setCodigo(produtoEncontrado.getCodigo());
+		
 		loop = true;
 		if (produtoEncontrado != null) {
-
+			System.out.println(
+					"\n*******************************************{ Informações do Produto }*******************************************\n"
+							+ "Nome " + "\t\t\t\tCategoria" + "\t\tPreço" + "\t\tTamanho" + "\t\tQuantidade"
+							+ "\t\tCódigo");
+			System.out.println(produtoEncontrado.imprimirTabela(produtoEncontrado.nome.length()));
 			System.out.print("\nO que deseja editar: ");
 			sc.reset();
 			campos = sc.nextLine();
@@ -196,23 +205,18 @@ public class Produto {
 					if (splitCampos[i].contains("nome")) {
 						System.out.print("Digite o nome: ");
 						produtoEncontrado.setNome(sc.nextLine());
-						splitCampos[i] = null;
 					} else if (splitCampos[i].contains("categoria")) {
 						System.out.print("Digite a categoria: ");
 						produtoEncontrado.setCategoria(sc.nextLine());
-						splitCampos[i] = null;
 					} else if (splitCampos[i].contains("preco") || splitCampos[i].contains("preço")) {
 						System.out.print("Digite o preço: ");
 						produtoEncontrado.setPreco(Double.parseDouble(sc.nextLine()));
-						splitCampos[i] = null;
 					} else if (splitCampos[i].contains("tamanho")) {
 						System.out.print("Digite o tamanho: ");
 						produtoEncontrado.setTamanho(sc.nextLine());
-						splitCampos[i] = null;
 					} else if (splitCampos[i].contains("quantidade")) {
 						System.out.print("Digite a quantidade: ");
 						produtoEncontrado.setQuantidade(Integer.parseInt(sc.nextLine()));
-						splitCampos[i] = null;
 					} else {
 						System.err.println("O campo '" + splitCampos[i] + "' não foi encontrado!");
 					}
@@ -221,19 +225,20 @@ public class Produto {
 			while (loop) {
 				System.out.println(
 						"\n*******************************************{ Informações do Produto }*******************************************\n"
-								+ "Nome " + "\t\t\t\tCategoria" + "\t\tPreço" + "\t\tTamanho" + "\t\tEstoque"
+								+ "Nome " + "\t\t\t\tCategoria" + "\t\tPreço" + "\t\tTamanho" + "\t\tQuantidade"
 								+ "\t\tCódigo");
 				System.out.println(produtoEncontrado.imprimirTabela(produtoEncontrado.nome.length()));
 				System.out.print("Deseja realmente alterar esse produto s/n: ");
 				switch (sc.nextLine().toLowerCase().charAt(0)) {
 				case 's': {
-					lista.remove(produtoEncontrado);
 					lista.add(produtoEncontrado);
 					System.out.println("Alterado com sucesso!");
 					loop = false;
 					break;
 				}
 				case 'n': {
+					lista.remove(produtoEncontrado);
+					lista.add(produtoAntigo);
 					return;
 				}
 				default:
@@ -252,17 +257,11 @@ public class Produto {
 		codigoEscolhido = sc.nextLong();
 		for (Produto produtoEncontrado : lista) {
 			if (produtoEncontrado.codigo == codigoEscolhido) {
-				System.out.println(
-						"\n*******************************************{ Informações do Produto }*******************************************\n"
-								+ "Nome " + "\t\t\t\tCategoria" + "\t\tPreço" + "\t\tTamanho" + "\t\tEstoque"
-								+ "\t\tCódigo");
-				System.out.println(produtoEncontrado.imprimirTabela(produtoEncontrado.nome.length()));
 				return produtoEncontrado;
-			} else {
-				System.err.println("\n*******Produto não encontrado******\n");
-				backEstoque(lista, loop, posicao);
 			}
 		}
+		System.err.println("\n*******Produto não encontrado******\n");
+		backEstoque(lista, loop, posicao);
 		return null;
 	}
 
