@@ -52,7 +52,7 @@ public class Main {
 			if (user.getTipo().equals("administrador")) {
 				menuPerfilAdm(produtos, loop);
 			} else if (user.getTipo().equals("cliente")) {
-				produto.menuPerfilClient(produtos);
+//				produto.menuPerfilClient(produtos);
 			}
 		}
 	}
@@ -80,7 +80,7 @@ public class Main {
 		System.out.println(entrada);
 		while (isLoop) {
 			System.out.print("Acesse a plataforma: ");
-			opcao = sc.nextInt();
+			opcao = Integer.parseInt(sc.nextLine());
 	        switch (opcao) {
             	case 0:
             		System.out.println(saida);
@@ -101,14 +101,15 @@ public class Main {
 	
 	public static void menuPerfilAdm(List<Produto> lista, boolean isLoop) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("\n*******************************************{ Menu do " + user.getTipo() + " }*******************************************\n");
+        int quantidade = 0, opcao;
         String menu =	"\n1- Ver estoque \t\t\t5- Meus dados do usuário \n" +
 						"2- Criar um novo produto \t6- Editar perfil do usuário \n" +
 						"3- Editar produto \t\t7-Sair\n" +
 						"4- Excluir produto\n" +
                 "Qual opção deseja acessar: ";
+        System.out.println("\n*******************************************{ Menu do " + user.getTipo() + " }*******************************************\n");
         System.out.print(menu);
-        int opcao = sc.nextInt();
+        opcao = Integer.parseInt(sc.nextLine());
         isLoop = true;
         while(isLoop){
             switch (opcao) {
@@ -125,10 +126,9 @@ public class Main {
                     break;
                 case 3:
                     //edition Producto
-                	int quantidade = 0;
                 	while (isLoop) {
             			System.out.print("Quantos produtos deseja editar: ");
-            			quantidade = sc.nextInt();
+            			quantidade = Integer.parseInt(sc.nextLine());
             			if (quantidade < 1) {
             				System.err.println("a quantidade deve ser maior que 0!");
             				isLoop = true;
@@ -142,7 +142,19 @@ public class Main {
                 	menuPerfilAdm(lista, isLoop);
                     break;
                 case 4:
-                    //deleteProducto(lista)
+                    //delete Producto
+                	System.out.print("Quantos produtos deseja Excluir: ");
+        			quantidade = Integer.parseInt(sc.nextLine());
+        			if (quantidade < 1) {
+        				System.err.println("a quantidade deve ser maior que 0!");
+        				isLoop = true;
+        			} else {
+        				isLoop = false;
+        			}
+	            	for (int i = 0; i < quantidade; i++) {
+	            		produto.deleteProducto(lista, isLoop, (i + 1));						
+					}
+                	menuPerfilAdm(lista, isLoop);
                     isLoop = false;
                     break;
                 case 5:
