@@ -110,38 +110,8 @@ public class Produto {
 	}
 
 	private String imprimirTabela(int tamanhoPalavra) {
-		String tabela = "";
-		if (tamanhoPalavra < 8) {
-			tabela = "________________________________________________________________________________________________________________\n"
-					+ nome + "\t\t\t\t" + categoria + "\t\t" + preco + "\t\t" + tamanho + "\t\t" + quantidade + "\t\t"
-					+ codigo;
-
-		} else if (tamanhoPalavra > 8 && tamanhoPalavra < 10) {
-			tabela = "________________________________________________________________________________________________________________\n"
-					+ nome + "\t\t\t\t" + categoria + "\t\t" + preco + "\t\t" + tamanho + "\t\t" + quantidade + "\t\t"
-					+ codigo;
-		} else if (tamanhoPalavra >= 10 && tamanhoPalavra <= 15) {
-			tabela = "________________________________________________________________________________________________________________\n"
-					+ nome + "\t\t\t" + categoria + "\t\t" + preco + "\t\t" + tamanho + "\t\t" + quantidade + "\t\t"
-					+ codigo;
-		} else if (tamanhoPalavra > 15 && tamanhoPalavra <= 20) {
-			tabela = "\t\t________________________________________________________________________________________________________________\n"
-					+ nome + "\t\t\t" + categoria + "\t\t\t" + preco + "\t\t" + tamanho + "\t\t" + quantidade + "\t\t"
-					+ codigo;
-		} else if (tamanhoPalavra > 20 && tamanhoPalavra < 26) {
-			tabela = "________________________________________________________________________________________________________________\n"
-					+ nome + "\t\t" + categoria + "\t\t\t" + preco + "\t\t" + tamanho + "\t\t" + quantidade + "\t\t"
-					+ codigo;
-		} else if (tamanhoPalavra >= 26 && tamanhoPalavra <= 30) {
-			tabela = "________________________________________________________________________________________________________________\n"
-					+ nome + "\t" + categoria + "\t\t\t" + preco + "\t\t" + tamanho + "\t\t" + quantidade + "\t\t"
-					+ codigo;
-		} else {
-			tabela = "________________________________________________________________________________________________________________\n"
-					+ nome + "\t\t\t" + categoria + "\t\t" + preco + "\t\t" + tamanho + "\t\t" + quantidade + "\t\t"
-					+ codigo;
-		}
-		tabela += "\n________________________________________________________________________________________________________________\n";
+		String tabela = "________________________________________________________________________________________________________________\n" +
+					"Nome: "+ nome + "\nCategoria: " + categoria + "\nPreço: " + preco + "\nTamanho: " + tamanho + "\nQuantidade: " + quantidade + "\nCódigo: " + codigo;
 		return tabela;
 	}
 
