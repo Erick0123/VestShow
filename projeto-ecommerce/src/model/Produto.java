@@ -38,10 +38,7 @@ public class Produto {
 					" ______________________________________________________________________________________________________________");
 			return false;
 		}
-		System.out.println(
-				"\n*******************************************{ Informações do Produto }*******************************************\n"
-						+ "Nome " + "\t\t\t\tCategoria" + "\t\tPreço" + "\t\tTamanho" + "\t\tQuantidade"
-						+ "\t\tCódigo");
+		System.out.println("\n*******************************************{ Informações do Produto }*******************************************");
 		if (listaCategoria.size() < 2) {
 			lista.stream().distinct().forEach(f -> {
 				if (f.categoria.equals(listaCategoria.get(0))) {
@@ -76,8 +73,7 @@ public class Produto {
 		boolean isLoop = true;
 		int opcao = 0;
 		List<String> categoria = new ArrayList<>();
-		System.out.println(
-				"\n**************************************************{ Categoria }*************************************************");
+		System.out.println("\n**************************************************{ Categoria }*************************************************");
 		for (int i = 0; i < lista.size(); i++) {
 			categoria.add(lista.get(i).categoria);
 		}
@@ -111,38 +107,8 @@ public class Produto {
 	}
 
 	private String imprimirTabela(int tamanhoPalavra) {
-		String tabela = "";
-		if (tamanhoPalavra < 8) {
-			tabela = "________________________________________________________________________________________________________________\n"
-					+ nome + "\t\t\t\t" + categoria + "\t\t" + preco + "\t\t" + tamanho + "\t\t" + quantidade + "\t\t"
-					+ codigo;
-
-		} else if (tamanhoPalavra > 8 && tamanhoPalavra < 10) {
-			tabela = "________________________________________________________________________________________________________________\n"
-					+ nome + "\t\t\t\t" + categoria + "\t\t" + preco + "\t\t" + tamanho + "\t\t" + quantidade + "\t\t"
-					+ codigo;
-		} else if (tamanhoPalavra >= 10 && tamanhoPalavra <= 15) {
-			tabela = "________________________________________________________________________________________________________________\n"
-					+ nome + "\t\t\t" + categoria + "\t\t" + preco + "\t\t" + tamanho + "\t\t" + quantidade + "\t\t"
-					+ codigo;
-		} else if (tamanhoPalavra > 15 && tamanhoPalavra <= 20) {
-			tabela = "________________________________________________________________________________________________________________\n"
-					+ nome + "\t\t" + categoria + "\t\t\t" + preco + "\t\t" + tamanho + "\t\t" + quantidade + "\t\t"
-					+ codigo;
-		} else if (tamanhoPalavra > 20 && tamanhoPalavra < 26) {
-			tabela = "________________________________________________________________________________________________________________\n"
-					+ nome + "\t\t" + categoria + "\t\t\t" + preco + "\t\t" + tamanho + "\t\t" + quantidade + "\t\t"
-					+ codigo;
-		} else if (tamanhoPalavra >= 26 && tamanhoPalavra <= 30) {
-			tabela = "________________________________________________________________________________________________________________\n"
-					+ nome + "\t" + categoria + "\t\t\t" + preco + "\t\t" + tamanho + "\t\t" + quantidade + "\t\t"
-					+ codigo;
-		} else {
-			tabela = "________________________________________________________________________________________________________________\n"
-					+ nome + "\t\t\t" + categoria + "\t\t" + preco + "\t\t" + tamanho + "\t\t" + quantidade + "\t\t"
-					+ codigo;
-		}
-		tabela += "\n________________________________________________________________________________________________________________\n";
+		String tabela = "________________________________________________________________________________________________________________\n" +
+					"Nome: "+ nome + "\nCategoria: " + categoria + "\nPreço: " + preco + "\nTamanho: " + tamanho + "\nQuantidade: " + quantidade + "\nCódigo: " + codigo;
 		return tabela;
 	}
 
@@ -192,9 +158,7 @@ public class Produto {
 		produtoAntigo.setCodigo(produtoEncontrado.getCodigo());
 		loop = true;
 		System.out.println(
-				"\n*******************************************{ Informações do Produto }*******************************************\n"
-						+ "Nome " + "\t\t\t\tCategoria" + "\t\tPreço" + "\t\tTamanho" + "\t\tQuantidade"
-						+ "\t\tCódigo");
+				"\n*******************************************{ Informações do Produto }*******************************************");
 		System.out.println(produtoEncontrado.imprimirTabela(produtoEncontrado.nome.length()));
 		System.out.print("\nO que deseja editar: ");
 		sc.reset();
@@ -226,9 +190,7 @@ public class Produto {
 		}
 		while (loop) {
 			System.out.println(
-					"\n*******************************************{ Informações do Produto }*******************************************\n"
-							+ "Nome " + "\t\t\t\tCategoria" + "\t\tPreço" + "\t\tTamanho" + "\t\tQuantidade"
-							+ "\t\tCódigo");
+					"\n*******************************************{ Informações do Produto }*******************************************");
 			System.out.println(produtoEncontrado.imprimirTabela(produtoEncontrado.nome.length()));
 			System.out.print("Deseja realmente alterar esse produto s/n: ");
 			switch (sc.nextLine().toLowerCase().charAt(0)) {
@@ -250,37 +212,28 @@ public class Produto {
 
 	}
 
-	public void deleteProducto(List<Produto> lista, boolean loop, int posicao) {
-		
-		System.out.println(
-				"\n********************************************{ Exclusão de Produtos }*******************************************");
+	public void deleteProducto(List<Produto> lista, boolean loop, int posicao) {		
+		System.out.println("\n********************************************{ Exclusão de Produtos }*******************************************");
 		Produto produtoEncontrado = null;
 		produtoEncontrado = searchProduct(lista, true, posicao);
 		loop = true;
 		while (loop) {
-			System.out.println(
-					"\n*******************************************{ Informações do Produto }*******************************************\n"
-							+ "Nome " + "\t\t\t\tCategoria" + "\t\tPreço" + "\t\tTamanho" + "\t\tQuantidade"
-							+ "\t\tCódigo");
-			System.out.println(produtoEncontrado.imprimirTabela(produtoEncontrado.nome.length()));
-			System.out.print("Deseja realmente Excluir esse produto s/n: ");
-			switch (sc.nextLine().toLowerCase().charAt(0)) {
-			case 's': {
-				for (int i = 0; i < 2; i++) {
-					lista.remove(produtoEncontrado);					
+			if (produtoEncontrado != null) {
+				System.out.println("\n*******************************************{ Informações do Produto }*******************************************");
+				System.out.println(produtoEncontrado.imprimirTabela(produtoEncontrado.nome.length()));
+				System.out.print("Deseja realmente Excluir esse produto s/n: ");
+				switch (sc.nextLine().toLowerCase().charAt(0)) {
+					case 's': {
+						for (int i = 0; i < 2; i++) {
+							lista.remove(produtoEncontrado);					
+						}
+						System.out.println("Excluído com sucesso!");
+						loop = false;
+						break;
+					}
 				}
-				System.out.println("Excluído com sucesso!");
-				loop = false;
-				break;
-			}
-			case 'n': {
-				return;
-			}
-			default:
-				System.err.println("\n*******Opção inválido******\n");
 			}
 		}
-
 	}
 
 	private Produto searchProduct(List<Produto> lista, boolean loop, int posicao) {
