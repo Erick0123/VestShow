@@ -36,9 +36,7 @@ public class Produto {
 					" ______________________________________________________________________________________________________________");
 			return false;
 		}
-		System.out.println(
-				"\n*******************************************{ Informações do Produto }*******************************************\n"
-						+ "Nome " + "\t\t\t\tCategoria" + "\t\tPreço" + "\t\tTamanho" + "\t\tQuantidade" + "\t\tCódigo");
+		System.out.println("\n*******************************************{ Informações do Produto }*******************************************");
 		if (listaCategoria.size() < 2) {
 			lista.stream().distinct().forEach(f -> {
 				if (f.categoria == listaCategoria.get(0)) {
@@ -75,8 +73,7 @@ public class Produto {
 		boolean isLoop = true;
 		int opcao = 0;
 		List<String> categoria = new ArrayList<>();
-		System.out.println(
-				"\n**************************************************{ Categoria }*************************************************");
+		System.out.println("\n**************************************************{ Categoria }*************************************************");
 		for (int i = 0; i < lista.size(); i++) {
 			categoria.add(lista.get(i).categoria);
 		}
@@ -160,10 +157,7 @@ public class Produto {
 		
 		loop = true;
 		if (produtoEncontrado != null) {
-			System.out.println(
-					"\n*******************************************{ Informações do Produto }*******************************************\n"
-							+ "Nome " + "\t\t\t\tCategoria" + "\t\tPreço" + "\t\tTamanho" + "\t\tQuantidade"
-							+ "\t\tCódigo");
+			System.out.println("\n*******************************************{ Informações do Produto }*******************************************");
 			System.out.println(produtoEncontrado.imprimirTabela(produtoEncontrado.nome.length()));
 			System.out.print("\nO que deseja editar: ");
 			sc.reset();
@@ -193,10 +187,7 @@ public class Produto {
 				}
 			}
 			while (loop) {
-				System.out.println(
-						"\n*******************************************{ Informações do Produto }*******************************************\n"
-								+ "Nome " + "\t\t\t\tCategoria" + "\t\tPreço" + "\t\tTamanho" + "\t\tQuantidade"
-								+ "\t\tCódigo");
+				System.out.println("\n*******************************************{ Informações do Produto }*******************************************\n");
 				System.out.println(produtoEncontrado.imprimirTabela(produtoEncontrado.nome.length()));
 				System.out.print("Deseja realmente alterar esse produto s/n: ");
 				switch (sc.nextLine().toLowerCase().charAt(0)) {
