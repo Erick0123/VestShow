@@ -17,7 +17,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		// Criando usuario adm
-		userList.add(new Usuario("Erick Alan", "70400654000198", "usuario.adm@gmail.com", "123456", "administrador"));
+		userList.add(new Usuario("Erick Alan", "42359591827", "usuario.adm@gmail.com", "123456", "administrador"));//70400654000198
 
 		// adicionando produtos
 		// Camisetas
@@ -46,12 +46,12 @@ public class Main {
 		user = startApplication(loop, opcao);
 		if (user != null) {
 			System.out.println(" ______________________________________________________________________________________________________________\n" +
-			  "| \t\t\t\t  Seja bem vindo a central do " + user.getTipo() + ", " + user.getNome() + "\t\t\t       |" +
+			  "| \t\t\t\t  Seja bem vindo a central do " + user.getPerfil() + ", " + user.getNome() + "\t\t\t       |" +
 			"\n|______________________________________________________________________________________________________________|");
 			
-			if (user.getTipo().equals("administrador")) {
+			if (user.getPerfil().equals("administrador")) {
 				menuPerfilAdm(produtos, loop);
-			} else if (user.getTipo().equals("cliente")) {
+			} else if (user.getPerfil().equals("cliente")) {
 //				produto.menuPerfilClient(produtos);
 			}
 		}
@@ -103,11 +103,11 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         int quantidade = 0, opcao;
         String menu =	"\n1- Ver estoque \t\t\t5- Meus dados do usuário \n" +
-						"2- Criar um novo produto \t6- Editar perfil do usuário \n" +
+						"2- Criar um novo produto \t6- Editar usuário \n" +
 						"3- Editar produto \t\t7-Sair\n" +
 						"4- Excluir produto\n" +
                 "Qual opção deseja acessar: ";
-        System.out.println("\n*******************************************{ Menu do " + user.getTipo() + " }*******************************************\n");
+        System.out.println("\n*******************************************{ Menu do " + user.getPerfil() + " }*******************************************\n");
         System.out.print(menu);
         opcao = Integer.parseInt(sc.nextLine());
         isLoop = true;
@@ -155,16 +155,56 @@ public class Main {
 	            		produto.deleteProducto(lista, isLoop, (i + 1));						
 					}
                 	menuPerfilAdm(lista, isLoop);
-                    isLoop = false;
                     break;
                 case 5:
-                    //myUser(lista)
-                    isLoop = false;
+                    //informations user(lista)
+                	user.printUser();
+                	while (isLoop) {
+                		System.out.print("Deseja editar s/n: ");			
+            			switch (sc.nextLine().toLowerCase().charAt(0)) {
+            			case 's': {    
+            				Usuario alterado = user.alterUser(user);
+            				if(alterado != null) {
+            					userList.remove(user);
+            					userList.add(alterado);
+            				}
+            				for (Usuario te: userList) {
+								te.printUser();
+							}
+            				isLoop = false;            				
+            				break;
+            			}
+            			case 'n': {
+            				isLoop = false;
+            				break;
+            			}
+            			default:
+            				System.err.println("\n*******Opção inválido******\n");
+            				isLoop = true;
+            			}
+            		}
+                    menuPerfilAdm(lista, isLoop);
                     break;
                 case 6:
-                    //editRoleUser(lista)
-                    isLoop = false;
-                    break;
+                    //edit user
+//                	if(user.getPerfil().equals("administrador")) {
+//                		while (isLoop) {
+//                			System.out.print("Quantos usuários deseja editar: ");
+//                			quantidade = Integer.parseInt(sc.nextLine());
+//                			if (quantidade < 1) {
+//                				System.err.println("a quantidade deve ser maior que 0!");
+//                				isLoop = true;
+//                			} else {
+//                				isLoop = false;
+//                			}
+//                		}
+//                		for (int i = 0; i < quantidade; i++) {
+//                    		user.editUser(lista, isLoop, (i + 1));						
+//    					}
+//                	}
+//                	user.editUser(lista, user);
+//                    isLoop = false;
+//                    break;
                 case 7:
                 	System.out.println("Encerrando sessão");
                     isLoop = false;

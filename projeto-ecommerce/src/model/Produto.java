@@ -42,12 +42,12 @@ public class Produto {
 		if (listaCategoria.size() < 2) {
 			lista.stream().distinct().forEach(f -> {
 				if (f.categoria.equals(listaCategoria.get(0))) {
-					System.out.println(f.imprimirTabela(f.nome.length()));
+					System.out.println(f.imprimirTabela());
 				}
 			});
 		} else {
 			lista.stream().distinct().forEach(f -> {
-				System.out.println(f.imprimirTabela(f.nome.length()));
+				System.out.println(f.imprimirTabela());
 			});
 		}
 		return true;
@@ -106,7 +106,7 @@ public class Produto {
 		return null;
 	}
 
-	private String imprimirTabela(int tamanhoPalavra) {
+	private String imprimirTabela() {
 		String tabela = "________________________________________________________________________________________________________________\n" +
 					"Nome: "+ nome + "\nCategoria: " + categoria + "\nPreço: " + preco + "\nTamanho: " + tamanho + "\nQuantidade: " + quantidade + "\nCódigo: " + codigo;
 		return tabela;
@@ -159,7 +159,7 @@ public class Produto {
 		loop = true;
 		System.out.println(
 				"\n*******************************************{ Informações do Produto }*******************************************");
-		System.out.println(produtoEncontrado.imprimirTabela(produtoEncontrado.nome.length()));
+		System.out.println(produtoEncontrado.imprimirTabela());
 		System.out.print("\nO que deseja editar: ");
 		sc.reset();
 		campos = sc.nextLine();
@@ -191,7 +191,7 @@ public class Produto {
 		while (loop) {
 			System.out.println(
 					"\n*******************************************{ Informações do Produto }*******************************************");
-			System.out.println(produtoEncontrado.imprimirTabela(produtoEncontrado.nome.length()));
+			System.out.println(produtoEncontrado.imprimirTabela());
 			System.out.print("Deseja realmente alterar esse produto s/n: ");
 			switch (sc.nextLine().toLowerCase().charAt(0)) {
 			case 's': {
@@ -207,6 +207,7 @@ public class Produto {
 			}
 			default:
 				System.err.println("\n*******Opção inválido******\n");
+				loop = true;
 			}
 		}
 
@@ -220,7 +221,7 @@ public class Produto {
 		while (loop) {
 			if (produtoEncontrado != null) {
 				System.out.println("\n*******************************************{ Informações do Produto }*******************************************");
-				System.out.println(produtoEncontrado.imprimirTabela(produtoEncontrado.nome.length()));
+				System.out.println(produtoEncontrado.imprimirTabela());
 				System.out.print("Deseja realmente Excluir esse produto s/n: ");
 				switch (sc.nextLine().toLowerCase().charAt(0)) {
 					case 's': {
